@@ -1,0 +1,18 @@
+import streamlit as st
+from fastai.vision.all import *
+import pathlib 
+temp = pathlib.PosixPath 
+pathlib.PosixPath = pathlib.WindowsPath
+
+#title 
+st.title('rasmlarni farqlovchi model')
+
+#rasmni joylash
+file = st.file_uploader('rasm yukla',type=['png','jpg','jpeg'])
+
+img=PILImage.create(file)
+model = load_lerner('classificator.pkl')
+
+pred, pred_id, probs=model.predict(img)
+st.success(pred)
+st.info(f'ehtimollik: {probs[pred_id]*100:.1f}%')
